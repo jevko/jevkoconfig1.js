@@ -13,7 +13,7 @@ title [jevkoconfig1 Example]
 
 [owner]
 name [tester]
-dob \`//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
+dob `//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
 
 [database]
 enabled [true]
@@ -88,3 +88,27 @@ It recognizes the following primitive values:
 * `list` means an empty list `[]`
 * `'<anything>` means that `<anything>` is meant to be a string, e.g. `'true` is `"true"`
 * anything unrecognized is interpreted as a string
+
+Heredoc strings are supported like this:
+
+```
+<key> `/<tag>/............./<tag>/
+```
+
+`<tag>` is any user-defined delimiting identifier, can be empty.
+
+Example:
+
+```
+dob `//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
+```
+
+parses to:
+
+```
+{
+  "dob": "2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]"
+}
+```
+
+All strings may be multiline.
