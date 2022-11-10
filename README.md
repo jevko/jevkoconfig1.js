@@ -114,7 +114,7 @@ parses to:
 }
 ```
 
-All strings may be multiline.
+All strings (not just heredocs) may be multiline.
 
 # Comments
 
