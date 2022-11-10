@@ -89,6 +89,8 @@ It recognizes the following primitive values:
 * `'<anything>` means that `<anything>` is meant to be a string, e.g. `'true` is `"true"`
 * anything unrecognized is interpreted as a string
 
+# Heredocs
+
 Heredoc strings are supported like this:
 
 ```
@@ -105,10 +107,51 @@ dob `//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
 
 parses to:
 
-```
+```json
 {
   "dob": "2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]"
 }
 ```
 
 All strings may be multiline.
+
+# Comments
+
+```
+This is a multiline
+comment that precedes
+a key [with a value]
+```
+
+parses to:
+
+```json
+{
+  "a key": "with a value"
+}
+```
+
+Also:
+
+```
+array [
+  Comment for the
+  frist value of an array
+  [1]
+  Comment for the
+  second value
+  [2]
+]
+```
+
+parses to:
+
+```
+{
+  "array": [1, 2]
+}
+```
+
+i.e. all lines that do not include brackets are ignored.
+
+Keys cannot be multiline, but may contain embedded spaces.

@@ -1,3 +1,7 @@
+import {parseJevkoWithHeredocs} from "https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.7/mod.js"
+
+export const fromString = (str) => convert(parseJevkoWithHeredocs(str))
+
 export const convert = (jevko) => nodes(prep(jevko))
 
 const prep = jevko => {

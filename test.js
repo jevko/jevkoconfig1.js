@@ -1,8 +1,6 @@
-import {parseJevkoWithHeredocs} from "https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.7/mod.js"
+import {fromString} from './mod.js'
 
-import {convert} from './mod.js'
-
-const ret = convert(parseJevkoWithHeredocs(`
+const ret = fromString(`
 This is a comment
 
 title [jevkoconfig1 Example]
@@ -28,7 +26,16 @@ beta [
   ip [10.0.0.2]
   role [backend]
 ]
-`))
+`)
 
 console.log(JSON.stringify(ret, null, 2))
 console.log(ret.database.test)
+
+console.log(fromString(`array [
+  Comment for the
+  frist value of an array
+  [1]
+  Comment for the
+  second value
+  [2]
+]`))
