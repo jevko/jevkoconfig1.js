@@ -32,6 +32,10 @@ alpha [
   role [frontend]
 ]
 beta [ ip [10.0.0.2] role [backend] ]
+
+-discarded key [[with][a][value]]
+-[discarded section]
+this key now goes under [servers]
 ```
 
 into this:
@@ -71,7 +75,8 @@ into this:
     "beta": {
       "ip": "10.0.0.2",
       "role": "backend"
-    }
+    },
+    "this key now goes under": "servers"
   }
 }
 ```

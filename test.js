@@ -26,6 +26,10 @@ beta [
   ip [10.0.0.2]
   role [backend]
 ]
+
+-discarded key [[with][a][value]]
+-[discarded section]
+this key now goes under [servers]
 `)
 
 console.log(JSON.stringify(ret, null, 2))
