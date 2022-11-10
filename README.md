@@ -153,7 +153,7 @@ parses to:
 }
 ```
 
-i.e. all lines that do not include brackets are ignored.
+i.e. all lines that precede a line with an opening bracket `[` are ignored.
 
 Keys cannot be multiline, but may contain embedded spaces.
 
