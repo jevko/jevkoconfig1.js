@@ -81,7 +81,7 @@ into this:
 }
 ```
 
-The example is based on the one from [TOML homepage](https://toml.io/en/).
+The example is based on the one from [TOML's homepage](https://toml.io/en/).
 
 Jevko Config 1 is similar to INI or TOML, but simpler and more flexible than both.
 
