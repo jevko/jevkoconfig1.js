@@ -39,3 +39,12 @@ console.log(fromString(`array [
   second value
   [2]
 ]`))
+
+
+console.log(fromString(`[A]
+key [value]
+key2 [value2]
+
+[A]
+key [value3]
+key3 [value4]`))

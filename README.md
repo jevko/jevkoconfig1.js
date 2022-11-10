@@ -18,7 +18,11 @@ dob `//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
 [database]
 enabled [true]
 quoted ['true]
-ports [[8000][8001][8002]]
+ports [
+  [8000]
+  [8001]
+  [8002]
+]
 data [ [[delta] [phi]] [3.14] ]
 temp targets [ cpu [79.5] case [72.0] ]
 
@@ -27,10 +31,7 @@ alpha [
   ip [10.0.0.1]
   role [frontend]
 ]
-beta [
-  ip [10.0.0.2]
-  role [backend]
-]
+beta [ ip [10.0.0.2] role [backend] ]
 ```
 
 into this:
@@ -155,3 +156,68 @@ parses to:
 i.e. all lines that do not include brackets are ignored.
 
 Keys cannot be multiline, but may contain embedded spaces.
+
+# Concatenation
+
+Multiple Jevko Config 1 files concatenated together will be shallow-merged: two occurences of section [A] will be treated as one occurence, entries with same keys that come last will overwrite entries that come before.
+
+```
+[A]
+key [value]
+key2 [value2]
+
+[A]
+key [value3]
+key3 [value4]
+```
+
+parses to:
+
+```js
+{ 
+  A: { 
+    key: "value3", 
+    key2: "value2", 
+    key3: "value4" 
+  } 
+}
+```
+
+However duplicate keys in maps outside of top-level are forbidden.
+
+Note:
+
+```
+top [1]
+
+[section]
+key [2]
+```
+
+concatenated with:
+
+```
+top2 [10]
+
+[section2]
+key2 [20]
+```
+
+produces:
+
+```
+top [1]
+
+[section]
+key [2]
+top2 [10]
+
+[section2]
+key2 [20]
+```
+
+i.e. `top2` from the second file goes under `[section]`.
+
+This is most likely not desirable, so it's best not to use keys without a section.
+
+TODO: perhaps forbid global keys.
