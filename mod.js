@@ -27,6 +27,7 @@ const string = (jevko) => {
   throw Error('Text node or attribute value cannot have children.')
 }
 
+// todo: rename
 const nodes = (jevko) => {
   const topMap = Object.create(null)
   // or initial section is topMap

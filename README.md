@@ -226,3 +226,17 @@ i.e. `top2` from the second file goes under `[section]`.
 This is most likely not desirable, so it's best not to use keys without a section.
 
 TODO: perhaps forbid global keys.
+
+# Data URLs
+
+TODO: perhaps support something like [Data URLs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs):
+
+```
+data:[<mediatype>][;base64],<data>
+```
+
+in particular base64-encoded binary data.
+
+```
+base64:<binary data>
+```
