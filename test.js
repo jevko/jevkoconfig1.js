@@ -49,6 +49,9 @@ some json \`/json/
   "parent": null 
 }
 /json/
+more json \`/json/55/json/
+json string \`/json/"\\n\\tsomething\\u0000"/json/
+json array \`/json/[1, 2, 3, 4, null]/json/
 `)
 
 console.log(JSON.stringify(ret, null, 2))

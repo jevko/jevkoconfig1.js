@@ -59,6 +59,9 @@ some json `/json/
   "parent": null 
 }
 /json/
+more json `/json/55/json/
+json string `/json/"\\n\\tsomething\\u0000"/json/
+json array `/json/[1, 2, 3, 4, null]/json/
 ```
 
 into this:
@@ -118,7 +121,16 @@ into this:
         "3aa670"
       ],
       "parent": null
-    }
+    },
+    "more json": 55,
+    "json string": "\n\tsomething\u0000",
+    "json array": [
+      1,
+      2,
+      3,
+      4,
+      null
+    ]
   }
 }
 ```
@@ -288,21 +300,33 @@ base64:<binary data>
 JSON values can be embedded in Jevko Config 1 as follows:
 
 ```
-key `/json/
+json object `/json/
 { 
   "id": "b3df0d",
   "count": 55
 }
 /json/
+json number \`/json/55/json/
+json string \`/json/"\\n\\tsomething\\u0000"/json/
+json array \`/json/[1, 2, 3, 4, null]/json/
 ```
 
 This will parse to:
 
 ```json
 {
-  "key": { 
+  "json object": { 
     "id": "b3df0d",
     "count": 55
-  }
+  },
+  "json number": 55,
+  "json string": "\n\tsomething\u0000",
+  "json array": [
+    1,
+    2,
+    3,
+    4,
+    null
+  ]
 }
 ```
