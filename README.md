@@ -60,7 +60,7 @@ some json `/json/
 }
 /json/
 more json `/json/55/json/
-json string `/json/"\\n\\tsomething\\u0000"/json/
+json string `/json/"\n\tsomething\u0000"/json/
 json array `/json/[1, 2, 3, 4, null]/json/
 ```
 
@@ -307,7 +307,7 @@ json object `/json/
 }
 /json/
 json number `/json/55/json/
-json string `/json/"\\n\\tsomething\\u0000"/json/
+json string `/json/"\n\tsomething\u0000"/json/
 json array `/json/[1, 2, 3, 4, null]/json/
 ```
 
