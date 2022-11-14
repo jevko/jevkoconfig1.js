@@ -27,15 +27,20 @@ data [ [[delta] [phi]] [3.14] ]
 temp targets [ cpu [79.5] case [72.0] ]
 
 [servers]
-alpha [
-  ip [10.0.0.1]
-  role [frontend]
-]
-beta [ ip [10.0.0.2] role [backend] ]
+
+section path relative to previous section:
+[./[alpha]]
+ip [10.0.0.1]
+role [frontend]
+
+absolute section path:
+[[servers][beta]]
+ip [10.0.0.2]
+role [backend]
 
 -discarded key [[with][a][value]]
 -[discarded section]
-this key now goes under [servers]
+this key now goes under [[servers][beta]]
 ```
 
 into this:
@@ -74,9 +79,12 @@ into this:
     },
     "beta": {
       "ip": "10.0.0.2",
-      "role": "backend"
-    },
-    "this key now goes under": "servers"
+      "role": "backend",
+      "this key now goes under": [
+        "servers",
+        "beta"
+      ]
+    }
   }
 }
 ```
@@ -92,8 +100,8 @@ It recognizes the following primitive values:
 * `null`
 * `map` means an empty map `{}`
 * `list` means an empty list `[]`
-* `'<anything>` means that `<anything>` is meant to be a string, e.g. `'true` is `"true"`
-* anything unrecognized is interpreted as a string
+* `'<anything>` or `'<anything>'` means that `<anything>` is meant to be a string, e.g. `'true` or `'true'` is `"true"`
+* anything unrecognized is interpreted as a string and autotrimmed
 
 # Heredocs
 

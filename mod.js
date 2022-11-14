@@ -44,11 +44,16 @@ const nodes = (jevko) => {
 
   for (const {prefix, jevko} of subjevkos) {
     if (prefix === '') {
-      currentSectionKey = string(jevko)
-      if (currentSectionKey in topMap === false) {
-        topMap[currentSectionKey] = Object.create(null)
+      const {path, isRelative} = toPath(jevko)
+
+      if (isRelative === false) currentSection = topMap
+      for (const p of path) {
+        currentSectionKey = p
+        if (currentSectionKey in currentSection === false) {
+          currentSection[currentSectionKey] = Object.create(null)
+        }
+        currentSection = currentSection[currentSectionKey]
       }
-      currentSection = topMap[currentSectionKey]
     } else {
       // note: allows overwriting
       currentSection[prefix] = inner(jevko)
@@ -59,13 +64,39 @@ const nodes = (jevko) => {
   return topMap
 }
 
+const toPath = jevko => {
+  const {subjevkos, suffix} = jevko
+  if (subjevkos.length === 0) return {path: [string(jevko)], isRelative: false}
+  if (suffix.trim() !== '') throw Error('oops')
+
+  const {prefix, jevko: jevko0} = subjevkos[0]
+  const ret = []
+
+  let isRelative = false
+  if (prefix === './') {
+    isRelative = true
+  } else if (prefix !== '') throw Error('oops')
+  
+  ret.push(string(jevko0))
+
+  for (const {prefix, jevko} of subjevkos.slice(1)) {
+    if (prefix !== '') throw Error('oops')
+    ret.push(string(jevko))
+  }
+  return {path: ret, isRelative}
+}
+
 const inner = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   if (subjevkos.length === 0) {
-    if (suffix.startsWith("'")) return suffix.slice(1)
-
     const trimmed = suffix.trim()
+
+    if (trimmed.startsWith("'")) {
+      // note: allow unclosed string literals
+      if (trimmed.at(-1) === "'") return trimmed.slice(1, -1)
+      return trimmed.slice(1)
+    }
 
     if (trimmed === 'true') return true
     if (trimmed === 'false') return false

@@ -18,18 +18,18 @@ data [ [[delta] [phi]] [3.14] ]
 temp targets [ cpu [79.5] case [72.0] ]
 
 [servers]
-alpha [
-  ip [10.0.0.1]
-  role [frontend]
-]
-beta [
-  ip [10.0.0.2]
-  role [backend]
-]
+
+[./[alpha]]
+ip [10.0.0.1]
+role [frontend]
+
+[[servers][beta]]
+ip [10.0.0.2]
+role [backend]
 
 -discarded key [[with][a][value]]
 -[discarded section]
-this key now goes under [servers]
+this key now goes under [[servers][beta]]
 `)
 
 console.log(JSON.stringify(ret, null, 2))
