@@ -306,9 +306,9 @@ json object `/json/
   "count": 55
 }
 /json/
-json number \`/json/55/json/
-json string \`/json/"\\n\\tsomething\\u0000"/json/
-json array \`/json/[1, 2, 3, 4, null]/json/
+json number `/json/55/json/
+json string `/json/"\\n\\tsomething\\u0000"/json/
+json array `/json/[1, 2, 3, 4, null]/json/
 ```
 
 This will parse to:
