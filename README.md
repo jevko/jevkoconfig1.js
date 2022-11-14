@@ -28,12 +28,12 @@ temp targets [ cpu [79.5] case [72.0] ]
 
 [servers]
 
-section path relative to previous section:
+-`//section path relative to previous section (like [.alpha] in ini)://
 [./[alpha]]
 ip [10.0.0.1]
 role [frontend]
 
-absolute section path:
+-`//absolute section path (like [servers.beta] in ini)://
 [[servers][beta]]
 ip [10.0.0.2]
 role [backend]
@@ -41,6 +41,24 @@ role [backend]
 -discarded key [[with][a][value]]
 -[discarded section]
 this key now goes under [[servers][beta]]
+
+[embedded documents]
+some json `/json/
+{ 
+  "id": "b3df0d",
+  "count": 55,
+  "props": {
+    "return code": "59503a7b",
+    "status": "pending"
+  },
+  "associated ids": [
+    "3adf7c",
+    "ff0df7",
+    "3aa670"
+  ],
+  "parent": null 
+}
+/json/
 ```
 
 into this:
@@ -84,6 +102,22 @@ into this:
         "servers",
         "beta"
       ]
+    }
+  },
+  "embedded documents": {
+    "some json": {
+      "id": "b3df0d",
+      "count": 55,
+      "props": {
+        "return code": "59503a7b",
+        "status": "pending"
+      },
+      "associated ids": [
+        "3adf7c",
+        "ff0df7",
+        "3aa670"
+      ],
+      "parent": null
     }
   }
 }
@@ -247,4 +281,28 @@ in particular base64-encoded binary data.
 
 ```
 base64:<binary data>
+```
+
+# Embedded JSON
+
+JSON values can be embedded in Jevko Config 1 as follows:
+
+```
+key `/json/
+{ 
+  "id": "b3df0d",
+  "count": 55
+}
+/json/
+```
+
+This will parse to:
+
+```json
+{
+  "key": { 
+    "id": "b3df0d",
+    "count": 55
+  }
+}
 ```

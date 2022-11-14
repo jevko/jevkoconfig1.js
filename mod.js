@@ -1,11 +1,11 @@
-import {parseJevkoWithHeredocs} from "https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.7/mod.js"
+import {parseJevkoWithHeredocs} from "https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.8/mod.js"
 
 export const fromString = (str) => convert(parseJevkoWithHeredocs(str))
 
 export const convert = (jevko) => nodes(prep(jevko))
 
 const prep = jevko => {
-  const {subjevkos, suffix} = jevko
+  const {subjevkos, ...rest} = jevko
 
   const subs = []
   for (const {prefix, jevko} of subjevkos) {
@@ -18,13 +18,18 @@ const prep = jevko => {
     if (trimmed.startsWith('-')) continue
     subs.push({prefix: trimmed, jevko: prep(jevko)})
   }
-  return {subjevkos: subs, suffix}
+  return {subjevkos: subs, ...rest}
 }
 
-const string = (jevko) => {
+const toKey = (jevko) => {
   const {subjevkos, suffix} = jevko
-  if (subjevkos.length === 0) return suffix
-  throw Error('Text node or attribute value cannot have children.')
+  if (subjevkos.length === 0) {
+    const trimmed = suffix.trim()
+    if (trimmed === '') throw Error('empty key not allowed')
+    return trimmed
+  }
+  console.error(jevko)
+  throw Error('not a valid key')
 }
 
 // todo: rename
@@ -66,7 +71,7 @@ const nodes = (jevko) => {
 
 const toPath = jevko => {
   const {subjevkos, suffix} = jevko
-  if (subjevkos.length === 0) return {path: [string(jevko)], isRelative: false}
+  if (subjevkos.length === 0) return {path: [toKey(jevko)], isRelative: false}
   if (suffix.trim() !== '') throw Error('oops')
 
   const {prefix, jevko: jevko0} = subjevkos[0]
@@ -77,11 +82,11 @@ const toPath = jevko => {
     isRelative = true
   } else if (prefix !== '') throw Error('oops')
   
-  ret.push(string(jevko0))
+  ret.push(toKey(jevko0))
 
   for (const {prefix, jevko} of subjevkos.slice(1)) {
     if (prefix !== '') throw Error('oops')
-    ret.push(string(jevko))
+    ret.push(toKey(jevko))
   }
   return {path: ret, isRelative}
 }
@@ -90,6 +95,10 @@ const inner = (jevko) => {
   const {subjevkos, suffix} = jevko
 
   if (subjevkos.length === 0) {
+    const {tag} = jevko
+
+    if (tag === 'json') return JSON.parse(suffix)
+
     const trimmed = suffix.trim()
 
     if (trimmed.startsWith("'")) {
