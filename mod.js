@@ -1,4 +1,4 @@
-import {parseJevkoWithHeredocs} from "https://cdn.jsdelivr.net/gh/jevko/parsejevko.js@v0.1.8/mod.js"
+import {jevkoFromString as parseJevkoWithHeredocs} from 'https://cdn.jsdelivr.net/gh/jevko/jevko.js@v0.1.0/mod.js'
 
 export const fromString = (str) => convert(parseJevkoWithHeredocs(str))
 

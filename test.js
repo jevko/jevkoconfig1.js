@@ -7,7 +7,7 @@ title [jevkoconfig1 Example]
 
 [owner]
 name [tester]
-dob \`//2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]//
+dob \`''2020-08-05T20:30:01+09:00[Asia/Tokyo][u-ca=japanese]''
 
 [database]
 enabled [true]
@@ -23,7 +23,7 @@ temp targets [ cpu [79.5] case [72.0] ]
 ip [10.0.0.1]
 role [frontend]
 
--\`//absolute section path (like [servers.beta] in ini)://
+-\`''absolute section path (like [servers.beta] in ini):''
 [[servers][beta]]
 ip [10.0.0.2]
 role [backend]
@@ -33,7 +33,7 @@ role [backend]
 this key now goes under [[servers][beta]]
 
 [embedded documents]
-some json \`/json/
+some json \`'json'
 { 
   "id": "b3df0d",
   "count": 55,
@@ -48,10 +48,10 @@ some json \`/json/
   ],
   "parent": null 
 }
-/json/
-more json \`/json/55/json/
-json string \`/json/"\\n\\tsomething\\u0000"/json/
-json array \`/json/[1, 2, 3, 4, null]/json/
+'json'
+more json \`'json'55'json'
+json string \`'json'"\\n\\tsomething\\u0000"'json'
+json array \`'json'[1, 2, 3, 4, null]'json'
 `)
 
 console.log(JSON.stringify(ret, null, 2))
